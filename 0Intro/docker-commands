@@ -1,0 +1,77 @@
+docker run <image name>
+
+docker <object> <command> <options>
+
+    object indicates the type of Docker object you'll be 
+    manipulating. This can be a container, image, 
+    network or volume object.
+
+    command indicates the task to be carried out by the 
+    daemon, that is the run command.
+
+    options can be any valid parameter that can override 
+    the default behavior of the command, like the 
+    --publish option for port mapping.
+
+docker container run <image name>
+
+docker container run --publish 8080:80 fhsinchy/hello-dock
+
+# /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+# /docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+# /docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+# 10-listen-on-ipv6-by-default.sh: Getting the checksum of /etc/nginx/conf.d/default.conf
+# 10-listen-on-ipv6-by-default.sh: Enabled listen on IPv6 in /etc/nginx/conf.d/default.conf
+# /docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+# /docker-entrypoint.sh: Configuration complete; ready for start up
+
+--publish <host port>:<container port>
+
+docker container run --detach --publish 8080:80 fhsinchy/hello-dock
+
+# 9f21cb77705810797c4b847dbd330d9c732ffddba14fb435470567a7a3f46cdc
+
+
+
+
+How to List Containers
+The container ls command can be used to list out containers that are currently running. To do so execute following command:
+
+docker container ls
+
+# CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                  NAMES
+# 9f21cb777058        fhsinchy/hello-dock   "/docker-entrypoint.…"
+
+
+docker container ls --all
+
+# CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS                     PORTS                  NAMES
+# 9f21cb777058        fhsinchy/hello-dock   "/docker-entrypoint.…"   2 minutes ago       Up 2 minutes               0.0.0.0:8080->80/tcp   gifted_sammet
+# 6cf52771dde1        fhsinchy/hello-dock   "/docker-entrypoint.…"   3 minutes ago       Exited (0) 3 minutes ago                          reverent_torvalds
+# 128ec8ceab71        hello-world
+
+docker container run --detach --publish 8888:80 --name hello-dock-container fhsinchy/hello-dock
+
+# b1db06e400c4c5e81a93a64d30acc1bf821bed63af36cab5cdb95d25e114f5fb
+
+
+docker container stop <container identifier>
+
+docker container start <container identifier>
+
+
+
+docker container ls --all
+
+# CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS                        PORTS               NAMES
+# b1db06e400c4        fhsinchy/hello-dock   "/docker-entrypoint.…"   3 minutes ago       Exited (0) 47 seconds ago                         hello-dock-container
+# 9f21cb777058        fhsinchy/hello-dock   "/docker-entrypoint.…"   7 minutes ago       Exited (137) 17 seconds ago                       hello-dock-container-2
+# 6cf52771dde1        fhsinchy/hello-dock   "/docker-entrypoint.…"   7 minutes ago       Exited (0) 7 minutes ago                          reverent_torvalds
+# 128ec8ceab71        hello-world           "/hello"                 9 minutes ago       Exited (0) 9 minutes ago                          exciting_chebyshev
+
+container restart
+
+
+docker container restart hello-dock-container-2
+
+# hello-dock-container-2
